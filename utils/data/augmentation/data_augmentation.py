@@ -14,9 +14,9 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 #import my own noising scripts
-from utils.augmenters.snp_noiser import add_snp_noise_to_dataset
-from utils.augmenters.gaussian_noiser import add_gaussian_noise_to_dataset
-from utils.augmenters.contrast import add_contrast_to_dataset
+from utils.data.augmentation.snp_noiser import add_snp_noise_to_dataset
+from utils.data.augmentation.gaussian_noiser import add_gaussian_noise_to_dataset
+from utils.data.augmentation.contrast import add_contrast_to_dataset
 
 def snp(source_path:str, dest_path:str, sat_val:float, bernoulli_params:List[float], noisy_images_per_param:int):
     """Wrapper function for adding all of our desired snp noise."""

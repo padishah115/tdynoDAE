@@ -6,8 +6,8 @@
 import torch.optim as optim
 
 #Import autoencoder and training function
-from models.autoencoder import FcAutoencoder
-from training.pipeline import Pipeline
+from models.fc_autoencoder import FcAutoencoder
+from run.pipeline import Pipeline
 
 def main():
 

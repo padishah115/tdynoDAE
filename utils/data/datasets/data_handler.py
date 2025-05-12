@@ -1,6 +1,6 @@
 # IMPORT DATALOADER FROM PYTORCH, AND MY OWN CUSTOM NPYDATASET CLASS
 from torch.utils.data import DataLoader
-from utils.npy_dataset import npyDataset
+from utils.data.datasets.npy_dataset import npyDataset
 
 class DataHandler():
     """Class responsible for returning us the datasets and dataloaders, created from .npy arrays."""

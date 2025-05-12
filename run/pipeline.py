@@ -4,11 +4,11 @@ import torch.nn as nn
 import torch.optim as optim
 
 # Import autoencoder training and testing functions
-from training.trainer import Trainer
-from training.tester import Tester
+from run.trainer import Trainer
+from run.tester import Tester
 
 # IMPORT DATAHANDLER CLASS (homemade)
-from utils.data_handler import DataHandler
+from utils.data.datasets.data_handler import DataHandler
 
 
 
@@ -109,6 +109,8 @@ class Pipeline():
         )
         #Train the model on the training set
         trainer.train(epochs=self.n_epochs)
+        #Save loss statistics for the training and validation
+        trainer.save_losses()
         #save the model's state dictionary
         self._save_model()
 
@@ -121,9 +123,11 @@ class Pipeline():
         )
         #Load the model, test it on the test set
         tester.test()
-        #Save the model's outputs, i.e. what the model produces in the output layer after acting on each
-        #test example in the test set.
+        #Save the model's outputs, i.e. what the model produces in the output layer
         tester.save_outputs()
+
+        #Save information about losses on the test set
+        tester.save_loss_data()
 
 
     def _save_model(self):
