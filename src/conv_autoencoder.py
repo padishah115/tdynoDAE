@@ -6,7 +6,7 @@
 import torch.optim as optim
 
 #Import autoencoder and training function
-from models.autoencoder import ConvAutoencoderI
+from models.conv_autoencoder import ConvAutoencoderI
 from training.pipeline import Pipeline
 
 def main():
