@@ -34,12 +34,15 @@ def main():
     batch_size = 1
 
     #Location where we seek to save the csv containing information about the loss as a function of epoch number
-    TV_loss_save_path = f'./trained_models/First-conv-edge-removal/data-augmentation/loss-statistics/TV_loss_{model.name}-{n_epochs}_epochs.csv'
+    TEST_EVAL_loss_save_path = \
+        f'./trained_models/First-conv-edge-removal/data-augmentation/loss-statistics/TV_loss_{model.name}-{n_epochs}_epochs.csv'
 
-    TEST_loss_save_path = f'./trained_models/First-conv-edge-removal/data-augmentation/loss-statistics/TEST_loss_{model.name}-{n_epochs}_epochs.csv'
+    TEST_loss_save_path = \
+        f'./trained_models/First-conv-edge-removal/data-augmentation/loss-statistics/TEST_loss_{model.name}-{n_epochs}_epochs.csv'
     
     #Location where we will save the state dictionary of the trained model
-    model_save_path = f'./trained_models/First-conv-edge-removal/data-augmentation/{model.name}-{n_epochs}_epochs.pt'
+    model_save_path = \
+        f'./trained_models/First-conv-edge-removal/data-augmentation/{model.name}-{n_epochs}_epochs.pt'
 
     #Model where we will save outputs after trials on the TEST SET
     outputs_save_path = './results/data-augmentation-conv-autoencoder'
@@ -57,7 +60,7 @@ def main():
         optimizer=optimizer,
         batch_size=batch_size,
         model_save_path=model_save_path,
-        TV_loss_save_path=TV_loss_save_path,
+        TEST_EVAL_loss_save_path=TEST_EVAL_loss_save_path,
         outputs_save_path=outputs_save_path,
         TEST_loss_save_path=TEST_loss_save_path
     )
