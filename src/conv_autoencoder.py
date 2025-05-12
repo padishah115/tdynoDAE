@@ -2,6 +2,9 @@
 # TRAIN THE EDGE DETECTION AUTOENCODER #
 ########################################
 
+#built-in module imports
+import os
+
 #Torch imports
 import torch.optim as optim
 
@@ -25,7 +28,7 @@ def main():
     #Model initialisation- here, try the fully-connected autoencoder
     print("Initialising CONV autoencoder model ...\n")
     model = ConvAutoencoderI()
-    print("Parameter number",sum([p.numel() for p in model.parameters()]))
+    print("Parameter number", sum([p.numel() for p in model.parameters()]))
 
     #Initialise hyperparameters of the training loop, and pass to Adam optimizer
     n_epochs = 30
@@ -33,19 +36,21 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr=lr)
     batch_size = 1
 
+    parent_dir = f"../tdynoDAE-trained_models/data-augmentation/{model.name}-{n_epochs}"
+
     #Location where we seek to save the csv containing information about the loss as a function of epoch number
     TEST_EVAL_loss_save_path = \
-        f'./trained_models/First-conv-edge-removal/data-augmentation/loss-statistics/TV_loss_{model.name}-{n_epochs}_epochs.csv'
+        os.path.join(parent_dir, "TEST_EVAL_loss.csv")
 
     TEST_loss_save_path = \
-        f'./trained_models/First-conv-edge-removal/data-augmentation/loss-statistics/TEST_loss_{model.name}-{n_epochs}_epochs.csv'
+        os.path.join(parent_dir, "TEST_loss.csv")
     
     #Location where we will save the state dictionary of the trained model
     model_save_path = \
-        f'./trained_models/First-conv-edge-removal/data-augmentation/{model.name}-{n_epochs}_epochs.pt'
+        os.path.join(parent_dir, f"state_dict.pt")
 
     #Model where we will save outputs after trials on the TEST SET
-    outputs_save_path = './results/data-augmentation-conv-autoencoder'
+    outputs_save_path = os.path.join(parent_dir, "outputs")
 
     #Run training loop
     print("Beginning model training ...\n")
