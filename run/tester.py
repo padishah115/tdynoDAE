@@ -103,10 +103,12 @@ class Tester():
         # Iterate over each output from the model in the test set, and save as a .npy array,
         # giving each file a name corresponding to the initial model input
         for key in self.outputs.keys():
-            model_output = self.outputs[key] #call up the output from the self.outputs dictionary
+            model_output : torch.Tensor = self.outputs[key] #call up the output from the self.outputs dictionary
             
             if self.model.flatten:
                 model_output = model_output.view(2064, -1).detach().numpy() #unflatten if model has FC layer
+            else: 
+                model_output = model_output.detach().numpy()
 
             #Save the model's outputs as appropriate
             save_path = os.path.join(self.outputs_save_path, f'from_{key}.npy')

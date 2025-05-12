@@ -76,18 +76,17 @@ class Trainer():
                 The mean loss across all batches in the training set as a float.
         """
 
-        # Reset loss to 0 at epoch beginning
         loss_train = 0.0
-
         #Iterate over image batches in training dataloader
         
         for i, items in enumerate(self.train_loader):
             print(f"Training Batch no. : {i+1}\n")
-            imgs = items[0] # 0th entry in items object is the batch data, 1th entry are the labels
-            imgs = imgs.to(self.device) #store to GPU when GPU available
+            
+            # 0th entry in items object is the batch data, 1th entry are the labels
+            imgs = items[0]
+            imgs = imgs.to(self.device)
 
-            #Clause that can deal with fully-connected models.
-            #Flattens input data if the model is FC
+            #Flattens input data if the model is fully-connected
             if self.model.flatten:
                 #Reshape the input images so that they are flat
                 batch_size = imgs.shape[0]
@@ -136,8 +135,7 @@ class Trainer():
 
                 #   FORWARDS PASS
                 #Get model outputs for the batch and calculate loss
-                
-                #IF/ELSE clause for handling models that require flattened input data.
+                #Flattens input images if model is fully-connected
                 if self.model.flatten:
                     batch_size = imgs.shape[0]
                     inputs = imgs.view(batch_size, -1)
@@ -170,10 +168,10 @@ class Trainer():
         }
     )
 
-        if not self.TEST_EVAL_loss_save_path('.csv'):
-            os.path.join(self.TEST_EVAL_loss_save_path, '.csv')
+        if not self.TRAIN_EVAL_loss_save_path.endswith('.csv'):
+            os.path.join(self.TRAIN_EVAL_loss_save_path, '.csv')
 
         # Save the CSV, without an index (this is useless and annoying, and the epoch number will take care)
         # of this anyway. 
         print("Saving loss data for training and validation ...\n")
-        df.to_csv(self.TEST_EVAL_loss_save_path, index=False)
+        df.to_csv(self.TRAIN_EVAL_loss_save_path, index=False)

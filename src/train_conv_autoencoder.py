@@ -37,9 +37,11 @@ def main():
     n_epochs = 1
     lr = 1e-5
     optimizer = optim.Adam(model.parameters(), lr=lr)
-    batch_size = 1
+    batch_size = 32
 
-    parent_dir = f"../tdynoDAE-trained_models/data-augmentation/{model.name}-{n_epochs}"
+    parent_dir = f"../tdynoDAE-trained_models/{model.name}-{n_epochs}"
+    if not os.path.exists(parent_dir):
+        os.mkdir(parent_dir)
 
     #Location where we seek to save the csv containing information about the loss as a function of epoch number
     TRAIN_EVAL_loss_save_path = \
@@ -54,6 +56,8 @@ def main():
 
     #Model where we will save outputs after trials on the TEST SET
     outputs_save_path = os.path.join(parent_dir, "outputs")
+    if not os.path.exists(outputs_save_path):
+        os.mkdir(outputs_save_path)
 
     #Run training loop
     print("Beginning model training ...\n")

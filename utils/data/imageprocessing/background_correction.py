@@ -11,7 +11,7 @@ from matplotlib.colors import LogNorm
 # Function for loading the image arrays, correcting for background, then removing #
 ###################################################################################
 
-def load_image(arr_path:str, shot_no:int):
+def load_image(arr_path:str, shot_no:int=None)->np.ndarray:
     """Function handling our loading and plotting of streak images from arrays.
     
     Parameters
@@ -20,23 +20,54 @@ def load_image(arr_path:str, shot_no:int):
             Path to the numpy array where the streak data is stored.
         shot_no : int
             The shot number for this particular data
+
+    Returns
+    -------
+        corrected_image : np.ndarray
+            The image as a .npy file after background subtraction has been performed.
     """
 
     print(f"\nAccessing raw image array at {arr_path} \n...")
-    arr = np.load(arr_path)
+    arr : np.ndarray = np.load(arr_path)
     print(f"Successfully loaded data for shot {shot_no}. Array shape {arr.shape}")
     
 
     #Separate the background image from the shot data, and subtract the two images to get the shot data.
-    background_image = arr[1]
-    shot_image = arr[0]
-    corrected_image = shot_image-background_image
-    
-    #Set lower threshold to 0
-    corrected_image[corrected_image<0] = 0
-    #print(f'Max pixel: {np.nanmax(corrected_image)}, Min pixel: {np.nanmin(corrected_image)}')
+    #Cast to np.int32 datatype to prevent underflow errors.
+    background_image = arr[1].astype(np.int32)
+    shot_image = arr[0].astype(np.int32)
+    corrected_image = np.subtract(shot_image, background_image)
 
     return corrected_image
+
+#######################################################################
+# FUNCTION FOR REPLACING RAW ARRAYS WITH BACKGROUND-SUBTRACTED ARRAYS #
+#######################################################################
+
+def correct_arrays(source_path:str, dest_path:str):
+    """Takes a directory full of .npy arrays, located at the source path, performs background correction, then
+    saves these background-corrected arrays at the dest path.
+    
+    Parameters
+    ----------
+        source_path : str
+            Path to the directory containing the raw (uncorrected) two-channel shot images, where
+            one channel is the background image, and one channel is the shot image.
+        dest_path : str
+            Path to the directory where we will store the shot images after background subtraction has
+            been performed.
+    """
+
+    # SCRAPE THE DIRECTORY FOR ALL .NPY FILES
+    # and store the path to all of these arrays in a list.
+    source_array_path_list = [os.path.join(source_path, f) for f in os.listdir(source_path) if f.endswith(".npy")]
+    dest_array_path_list = [os.path.join(dest_path, f) for f in os.listdir(source_path) if f.endswith(".npy")]
+
+    # iterate through path lists, save background-corrected arrays as appropriate
+    for i, array_path in enumerate(source_array_path_list):
+        corr_arr = load_image(arr_path=array_path)
+        np.save(file=dest_array_path_list[i], arr=corr_arr)
+
 
 
 ###########################
