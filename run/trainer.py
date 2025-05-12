@@ -22,7 +22,7 @@ class Trainer():
                  optimizer:optim.Optimizer, 
                  train_loader:DataLoader, 
                  eval_loader:DataLoader, 
-                 TEST_EVAL_loss_save_path:str
+                 TRAIN_EVAL_loss_save_path:str
                  ):
 
         # CHECKS TO SEE WHETHER GPU IS AVAILABLE AND ADJUSTS DEVICE AS APPROPRIATE
@@ -35,7 +35,7 @@ class Trainer():
         self.eval_loader = eval_loader
 
         # Location for storing loss statistics on the training and validation sets as a function of epoch number.
-        self.TEST_EVAL_loss_save_path = TEST_EVAL_loss_save_path
+        self.TRAIN_EVAL_loss_save_path = TRAIN_EVAL_loss_save_path
 
         # Lists for tracking loss data.
         self.epochs = []

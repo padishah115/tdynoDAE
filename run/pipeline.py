@@ -88,7 +88,7 @@ class Pipeline():
 
         # Paths for saving data about the training and testing processes.
         self.model_save_path = model_save_path # model state dict
-        self.TV_loss_save_path = TRAIN_EVAL_loss_save_path # loss stats for training and validation
+        self.TRAIN_EVAL_loss_save_path = TRAIN_EVAL_loss_save_path # loss stats for training and validation
         self.outputs_save_path = outputs_save_path # model outputs from test data
         self.TEST_loss_save_path = TEST_loss_save_path # path where we'll save information about loss on the test set
         
@@ -104,7 +104,7 @@ class Pipeline():
             optimizer=self.optimizer,
             train_loader=self.train_loader,
             eval_loader=self.eval_loader,
-            TV_loss_save_path=self.TV_loss_save_path
+            TRAIN_EVAL_loss_save_path=self.TRAIN_EVAL_loss_save_path
 
         )
         #Train the model on the training set

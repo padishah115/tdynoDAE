@@ -44,27 +44,29 @@ def create_3_random_datasets(data_path:str, dest_path:str, train_frac:float, eva
     
     sets = ['training', 'validation', 'test']
     for set in sets:
-        subdir_path = os.path.join(dest_path, f'{set} set')
+        subdir_path = os.path.join(dest_path, f'{set}-set')
+        if os.path.exists(subdir_path):
+            shutil.rmtree(subdir_path)
         os.makedirs(subdir_path, exist_ok=True)
 
     training_examples = np.random.choice(arrays_list, size=train_set_length, replace=False).tolist()
     for training_example in training_examples:
         arrays_list.remove(training_example)
         old_example_path = os.path.join(data_path, training_example)
-        new_example_path = os.path.join(dest_path, 'training set', training_example)
+        new_example_path = os.path.join(dest_path, 'training-set', training_example)
         shutil.copy(old_example_path, new_example_path)
 
     eval_examples = np.random.choice(arrays_list, size=eval_set_length, replace=False).tolist()
     for eval_example in eval_examples:
         arrays_list.remove(eval_example)
         old_example_path = os.path.join(data_path, eval_example)
-        new_example_path = os.path.join(dest_path, 'validation set', eval_example)
+        new_example_path = os.path.join(dest_path, 'validation-set', eval_example)
         shutil.copy(old_example_path, new_example_path)
 
     test_examples = arrays_list
     for test_example in test_examples:
         old_example_path = os.path.join(data_path, test_example)
-        new_example_path = os.path.join(dest_path, 'test set', test_example)
+        new_example_path = os.path.join(dest_path, 'test-set', test_example)
         shutil.copy(old_example_path, new_example_path)
 
     print(f'Training examples: {training_examples}\
