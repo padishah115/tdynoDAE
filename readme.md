@@ -1,0 +1,1 @@
+This project seeks to train a denoising convolutional autoencoder (CDAE) on synthetic (simulated) images of the OMEGA TDYNO plasma which have had noise introduced artificially. 
